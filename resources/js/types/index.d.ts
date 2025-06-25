@@ -41,3 +41,11 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface PageProps<T = unknown> {
+    auth: Auth;
+    ziggy: Config & { location: string };
+    sidebarOpen: boolean;
+    // Props tambahan dari inertia bisa diteruskan sebagai generic
+    data?: T;
+}

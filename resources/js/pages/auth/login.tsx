@@ -11,7 +11,7 @@ import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 
 type LoginForm = {
-    email: string;
+    username: string;
     password: string;
     remember: boolean;
 };
@@ -23,7 +23,7 @@ interface LoginProps {
 
 export default function Login({ status, canResetPassword }: LoginProps) {
     const { data, setData, post, processing, errors, reset } = useForm<Required<LoginForm>>({
-        email: '',
+        username: '',
         password: '',
         remember: false,
     });
@@ -36,47 +36,46 @@ export default function Login({ status, canResetPassword }: LoginProps) {
     };
 
     return (
-        <AuthLayout
-            title="Masuk ke Sistem Surat POLMED"
-            description="Silakan masukkan email dan password Anda untuk masuk ke sistem."
-        >
+        <AuthLayout title="Masuk ke Sistem Surat POLMED" description="Silakan masukkan username dan password Anda untuk masuk ke sistem.">
             <Head title="Login" />
 
-            <form
-                className="flex flex-col gap-8 bg-white/90 rounded-2xl shadow-xl p-8 border border-violet-100"
-                onSubmit={submit}
-            >
-                <div className="flex flex-col items-center mb-4">
-                    <div className="w-16 h-16 rounded-full border-4 border-violet-200 flex items-center justify-center text-violet-700 text-2xl font-bold bg-gradient-to-b from-violet-200 to-violet-400 shadow-inner select-none mb-2">
+            <form className="flex flex-col gap-8 rounded-2xl border border-violet-100 bg-white/90 p-8 shadow-xl" onSubmit={submit}>
+                <div className="mb-4 flex flex-col items-center">
+                    <div className="mb-2 flex h-16 w-16 items-center justify-center rounded-full border-4 border-violet-200 bg-gradient-to-b from-violet-200 to-violet-400 text-2xl font-bold text-violet-700 shadow-inner select-none">
                         <svg width="32" height="32" fill="none" viewBox="0 0 32 32">
                             <rect x="4" y="10" width="24" height="14" rx="4" fill="#a78bfa" />
                             <rect x="8" y="14" width="16" height="4" rx="2" fill="#ede9fe" />
                         </svg>
                     </div>
-                    <h2 className="text-2xl font-bold text-violet-800 mb-1">Sistem Surat POLMED</h2>
-                    <p className="text-violet-500 text-sm">Login untuk melanjutkan</p>
+                    <h2 className="mb-1 text-2xl font-bold text-violet-800">Sistem Surat POLMED</h2>
+                    <p className="text-sm text-violet-500">Login untuk melanjutkan</p>
                 </div>
+
                 <div className="grid gap-6">
                     <div className="grid gap-2">
-                        <Label htmlFor="email" className="text-violet-700 font-medium">Email</Label>
+                        <Label htmlFor="username" className="font-medium text-violet-700">
+                            Username
+                        </Label>
                         <Input
-                            id="email"
-                            type="email"
+                            id="username"
+                            type="text"
                             required
                             autoFocus
                             tabIndex={1}
-                            autoComplete="email"
-                            value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            placeholder="email@example.com"
+                            autoComplete="username"
+                            value={data.username}
+                            onChange={(e) => setData('username', e.target.value)}
+                            placeholder="Masukkan username"
                             className="border-violet-300 focus:ring-2 focus:ring-violet-400"
                         />
-                        <InputError message={errors.email} />
+                        <InputError message={errors.username} />
                     </div>
 
                     <div className="grid gap-2">
                         <div className="flex items-center">
-                            <Label htmlFor="password" className="text-violet-700 font-medium">Password</Label>
+                            <Label htmlFor="password" className="font-medium text-violet-700">
+                                Password
+                            </Label>
                             {canResetPassword && (
                                 <TextLink href={route('password.request')} className="ml-auto text-sm text-violet-500 hover:underline" tabIndex={5}>
                                     Lupa password?
@@ -105,16 +104,18 @@ export default function Login({ status, canResetPassword }: LoginProps) {
                             onClick={() => setData('remember', !data.remember)}
                             tabIndex={3}
                         />
-                        <Label htmlFor="remember" className="text-violet-700">Ingat saya</Label>
+                        <Label htmlFor="remember" className="text-violet-700">
+                            Ingat saya
+                        </Label>
                     </div>
 
                     <Button
                         type="submit"
-                        className="mt-4 w-full bg-gradient-to-r from-violet-600 to-violet-500 text-white font-bold rounded-xl hover:from-violet-700 hover:to-violet-600 transition"
+                        className="mt-4 w-full rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 font-bold text-white transition hover:from-violet-700 hover:to-violet-600"
                         tabIndex={4}
                         disabled={processing}
                     >
-                        {processing && <LoaderCircle className="h-4 w-4 animate-spin mr-2" />}
+                        {processing && <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />}
                         Masuk
                     </Button>
                 </div>

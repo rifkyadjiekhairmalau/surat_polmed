@@ -14,7 +14,7 @@ use Inertia\Response;
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Show the login page.
+     * Tampilkan halaman login.
      */
     public function create(Request $request): Response
     {
@@ -25,19 +25,31 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Proses login.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        $user = Auth::user();
+
+        // Redirect sesuai level_user_id
+        return redirect()->route(match ($user->level_user_id) {
+            1 => 'admin.dashboard',
+            2 => 'mahasiswa.dashboard',
+            3 => 'pegawai.dashboard',
+            4 => 'tu.dashboard',
+            5 => 'direktur.dashboard',
+            6 => 'wadir.dashboard',
+            7 => 'kabag.dashboard',
+            8 => 'kasubbag.dashboard',
+            default => 'dashboard', // fallback
+        });
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout user.
      */
     public function destroy(Request $request): RedirectResponse
     {

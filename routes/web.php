@@ -3,6 +3,7 @@
 use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,33 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
+
+
+
+
+// Route::middleware(['auth', 'verified'])->group(function () {
+
+//     // Admin (1)
+//     Route::middleware('role:1')->get('/admin/dashboard', [DashboardController::class, 'showAdmin'])->name('admin.dashboard');
+
+//     // Mahasiswa (2) & Pegawai (3)
+//     Route::middleware('role:2,3')->get('/user/dashboard', [DashboardController::class, 'showMahasiswaOrPegawai'])->name('user.dashboard');
+
+//     // Tata Usaha (4)
+//     Route::middleware('role:4')->get('/tu/dashboard', [DashboardController::class, 'showTU'])->name('tu.dashboard');
+
+//     // Direktur (5) & Wadir (6)
+//     Route::middleware('role:5,6')->get('/pimpinan/dashboard', [DashboardController::class, 'showDirekturWadir'])->name('pimpinan.dashboard');
+
+//     // Kabag (7)
+//     Route::middleware('role:7')->get('/kabag/dashboard', [DashboardController::class, 'showKabag'])->name('kabag.dashboard');
+
+//     // Kasubbag (8)
+//     Route::middleware('role:8')->get('/kasubbag/dashboard', [DashboardController::class, 'showKasubbag'])->name('kasubbag.dashboard');
+
+//     // Fallback dashboard
+//     Route::get('/dashboard', [DashboardController::class, 'fallback'])->name('dashboard');
+// });
 
 
 // --- PENAMBAHAN ROUTE BARU UNTUK DASHBOARD ADMIN (TANPA AUTH) ---
@@ -156,7 +184,6 @@ Route::get('dashboard-kasubag', function () {
 
 
 });
-
 
 // FILE ROUTE TAMBAHAN
 require __DIR__.'/auth.php';

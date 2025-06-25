@@ -1,13 +1,11 @@
-import React, { PropsWithChildren } from 'react';
-import TuSidebar from './partials/TuSidebar';
+import { PropsWithChildren } from 'react';
+import TuSidebar from './Partials/TuSidebar';
 
 export default function TuLayout({ children }: PropsWithChildren) {
     return (
-        <div className="min-h-screen flex flex-col md:flex-row bg-gray-100">
+        <div className="flex min-h-screen flex-col bg-gray-100 md:flex-row">
             <TuSidebar />
-            <main className="flex-grow p-6 md:p-8 flex-1">
-                {children}
-            </main>
+            <main className="flex-1 flex-grow p-6 md:p-8">{children}</main>
         </div>
     );
 }
